@@ -1,0 +1,153 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+/* ── Opening Curtain ── */
+.hero__curtain {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  z-index: 9999;
+  display: none;
+  pointer-events: none;
+}
+
+.hero__curtain--top { top: 0; background: var(--bg-primary); }
+.hero__curtain--bottom { bottom: 0; background: var(--bg-primary); }
+
+/* ── Background ── */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-primary);
+  z-index: 0;
+}
+
+/* ── Artistic Lines ── */
+.hero__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero__line {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+}
+
+/* ── Main Title ── */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.85;
+}
+
+.hero__title-main {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 14vw, 12rem);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.hero__title-accent {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-top: 24px;
+}
+
+/* ── Footer Info Bar ── */
+.hero__footer {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  right: 40px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.hero__footer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__footer-mark {
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+.hero__footer-dot {
+  opacity: 0.4;
+}
+
+.hero__footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__footer-arrow {
+  font-size: 0.65rem;
+  animation: bounceDown 2s infinite;
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(4px); opacity: 0.4; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero__title-main {
+    letter-spacing: 0.08em;
+  }
+
+  .hero__footer {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+  }
+
+  .hero__footer-left {
+    gap: 6px;
+  }
+
+  .hero__footer-right span:last-child {
+    display: none;
+  }
+}
