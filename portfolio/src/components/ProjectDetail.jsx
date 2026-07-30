@@ -3,15 +3,10 @@ import { useState, useEffect, useCallback } from 'react';
 import './ProjectDetail.css';
 
 const projects = [
-  { id: 1, title: 'NovaOS 设计系统', category: 'UI/UX 设计' },
-  { id: 2, title: 'AI 生成艺术展', category: 'AI 设计' },
-  { id: 3, title: 'Luma 品牌重塑', category: '品牌设计' },
-  { id: 4, title: 'Flow 智能助手', category: 'AI / 产品设计' },
-  { id: 5, title: 'Zenith 数据大屏', category: '可视化设计' },
-  { id: 6, title: 'Nebula 3D 视界', category: '3D 视觉' },
-  { id: 7, title: 'Pulse 动效规范', category: '动效设计' },
-  { id: 8, title: 'Echo 语音界面', category: 'UI/UX 设计' },
-  { id: 9, title: 'Aurora 字体实验', category: '平面设计' },
+  { id: 2, title: 'AI制作品牌全案', category: 'AI 品牌' },
+  { id: 3, title: '平面视觉', category: '平面 / 动效', ending: true },
+  { id: 4, title: 'UI/UX移动端', category: 'UI/UX 设计', ending: true },
+  { id: 5, title: '复合型能力', category: '综合技能' },
 ];
 
 export default function ProjectDetail() {
@@ -22,7 +17,7 @@ export default function ProjectDetail() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Auto-discover images: try img1.png, img2.png... until 2 consecutive failures
+  // Auto-discover images: try img1.png/gif, img2.png/gif... until 2 consecutive failures
   useEffect(() => {
     if (!project) return;
     setImages([]);
@@ -32,6 +27,7 @@ export default function ProjectDetail() {
     let consecutiveFailures = 0;
     const maxFailures = 2;
     const discovered = [];
+    const extensions = ['png', 'gif'];
 
     const tryNext = () => {
       if (consecutiveFailures >= maxFailures) {
@@ -40,23 +36,38 @@ export default function ProjectDetail() {
         return;
       }
 
-      const imgPath = `/projects/${id}/img${index}.png`;
-      const img = new Image();
+      // For each index, try png first, then gif
+      let extIndex = 0;
 
-      img.onload = () => {
-        discovered.push(imgPath);
-        consecutiveFailures = 0;
-        index++;
-        tryNext();
+      const tryExtension = () => {
+        if (extIndex >= extensions.length) {
+          // Neither extension worked for this index
+          consecutiveFailures++;
+          index++;
+          tryNext();
+          return;
+        }
+
+        const ext = extensions[extIndex];
+        const imgPath = `/projects/${id}/img${index}.${ext}`;
+        const img = new Image();
+
+        img.onload = () => {
+          discovered.push(imgPath);
+          consecutiveFailures = 0;
+          index++;
+          tryNext();
+        };
+
+        img.onerror = () => {
+          extIndex++;
+          tryExtension();
+        };
+
+        img.src = imgPath;
       };
 
-      img.onerror = () => {
-        consecutiveFailures++;
-        index++;
-        tryNext();
-      };
-
-      img.src = imgPath;
+      tryExtension();
     };
 
     tryNext();
@@ -108,6 +119,12 @@ export default function ProjectDetail() {
           <p className="project-detail__empty-text">暂无展示图片</p>
         )}
       </div>
+
+      {project.ending && (
+        <div className="project-detail__ending">
+          <img src="/projects/ending.png" alt="Ending" className="project-detail__ending-img" />
+        </div>
+      )}
     </div>
   );
 }

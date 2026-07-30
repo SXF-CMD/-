@@ -3,7 +3,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-gsap.defaults({ ease: 'power4.out', force3D: true });
+gsap.config({ force3D: true });
+gsap.defaults({ ease: 'power4.out' });
 
 export function initOpeningAnimation() {
   const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });

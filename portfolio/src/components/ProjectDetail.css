@@ -121,6 +121,17 @@
   padding: 80px 0;
 }
 
+.project-detail__ending {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.project-detail__ending-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .project-detail {
     padding: 72px 0 80px;
